@@ -3,13 +3,13 @@ using ToDoQL.Models;
 
 namespace ToDoQL.Data
 {
-    public class ApiDbContext : DbContext
+    public class AppDbContext : DbContext
     {
         public virtual DbSet<ItemData> Items { get; set; }
 
         public virtual DbSet<ItemList> Lists { get; set; }
 
-        public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
 
