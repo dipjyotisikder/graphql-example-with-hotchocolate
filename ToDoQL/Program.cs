@@ -23,7 +23,8 @@ namespace ToDoQL
                     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             _ = builder.Services.AddGraphQLServer()
-                .AddQueryType<Query>();
+                .AddQueryType<Query>()
+                .AddProjections();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
