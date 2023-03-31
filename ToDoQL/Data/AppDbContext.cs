@@ -5,23 +5,22 @@ namespace ToDoQL.Data
 {
     public class AppDbContext : DbContext
     {
-        public virtual DbSet<ItemData> Items { get; set; }
-
-        public virtual DbSet<ItemList> Lists { get; set; }
-
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
 
+        public virtual DbSet<Item> Items { get; set; }
+
+        public virtual DbSet<ItemList> ItemLists { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ItemData>(x =>
+            modelBuilder.Entity<Item>(x =>
             {
                 x.HasOne(i => i.ItemList)
-                .WithMany(i => i.ItemDatas)
+                .WithMany(i => i.Items)
                 .HasForeignKey(i => i.ListId)
-                .OnDelete(DeleteBehavior.Restrict)
-                .HasConstraintName("FK_ItemData_ItemList");
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
             base.OnModelCreating(modelBuilder);
