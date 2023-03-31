@@ -24,7 +24,10 @@ namespace ToDoQL
 
             _ = builder.Services.AddGraphQLServer()
                 .AddQueryType<Query>()
-                .AddProjections();
+                .AddType<ItemListsType>()
+                .AddProjections()
+                .AddFiltering()
+                .AddSorting();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

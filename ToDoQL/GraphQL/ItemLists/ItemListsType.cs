@@ -10,17 +10,20 @@ namespace ToDoQL.GraphQL
     {
         protected override void Configure(IObjectTypeDescriptor<ItemList> descriptor)
         {
-            descriptor.Field(x => x.Items)
-                .ResolveWith<FieldResolvers>(x => x.GetItems(default!, default))
-                .UseDbContext<AppDbContext>();
-        }
-    }
+            descriptor.Description("This model is used as Item for Item List.");
 
-    public class FieldResolvers
-    {
-        public IQueryable<Item> GetItems(ItemList itemList, [ScopedService] AppDbContext context)
+            descriptor.Field(x => x.Items)
+                .ResolveWith<Resolvers>(x => x.GetItems(default!, default))
+                .UseDbContext<AppDbContext>()
+                .Description("This Item is the list that Item belongs to.");
+        }
+
+        private class Resolvers
         {
-            return context.Items.Where(x => x.ListId == itemList.Id);
+            public IQueryable<Item> GetItems([Parent] ItemList itemList, [ScopedService] AppDbContext context)
+            {
+                return context.Items.Where(x => x.ListId == itemList.Id);
+            }
         }
     }
 }
