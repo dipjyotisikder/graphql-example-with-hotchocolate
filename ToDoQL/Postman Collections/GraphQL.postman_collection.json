@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "00f5d980-fb5d-4327-b9a3-8666529e1792",
+		"name": "GraphQL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Item Lists",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n\titemLists {\r\n\t\tid\r\n\t\tname\r\n\t}\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/graphql",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ItemLists and Items parallelly",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n\txxx:itemLists {\r\n\t\tid\r\n\t\tname\r\n\t}\r\n    yyy:items\r\n    {\r\n        id,\r\n        title,\r\n        description\r\n    }\r\n\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/graphql",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ItemLists and load Items inside",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n\txxx:itemLists {\r\n\t\tid\r\n\t\tname\r\n        items\r\n        {\r\n            id,\r\n            title,\r\n            description\r\n        }\r\n\t}\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/graphql",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ItemLists and load Items inside - Filtering",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n\titemLists(where: {id: {eq:1}})\r\n    {\r\n        id,\r\n        name,\r\n        items \r\n        {\r\n            id\r\n            title\r\n            description\r\n            isDone\r\n        }\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/graphql",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ItemLists and load Items inside - Sorting",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\r\n\titemLists(order: {name: ASC})\r\n    {\r\n        id,\r\n        name,\r\n        items\r\n        {\r\n            id\r\n            title\r\n            description\r\n            isDone\r\n        }\r\n    }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "{{baseurl}}/graphql",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
