@@ -19,13 +19,15 @@ namespace ToDoQL
             builder.Services.AddControllers();
 
             builder.Services
-                .AddPooledDbContextFactory<AppDbContext>(options =>
+                .AddDbContextFactory<AppDbContext>(options =>
                     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             _ = builder.Services.AddGraphQLServer()
                 .AddQueryType<Query>()
+                .AddMutationType<Mutation>()
+                .AddSubscriptionType<Subscription>()
                 .AddType<ItemListsType>()
-                .AddProjections()
+                .AddType<ItemType>()
                 .AddFiltering()
                 .AddSorting();
 

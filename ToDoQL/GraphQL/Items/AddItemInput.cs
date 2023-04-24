@@ -1,6 +1,4 @@
-﻿using ToDoQL.Models;
-
-namespace ToDoQL.GraphQL
+﻿namespace ToDoQL.GraphQL
 {
-    public record AddItemInput(Item Item);
+    public record AddItemInput(string title, string description, bool isDone, int listId);
 }

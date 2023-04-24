@@ -6,23 +6,23 @@ using ToDoQL.Models;
 
 namespace ToDoQL.GraphQL
 {
-    public class ItemListsType : ObjectType<ItemList>
+    public class ItemType : ObjectType<Item>
     {
-        protected override void Configure(IObjectTypeDescriptor<ItemList> descriptor)
+        protected override void Configure(IObjectTypeDescriptor<Item> descriptor)
         {
             descriptor.Description("This model is used as Item for Item List.");
 
-            descriptor.Field(x => x.Items)
-                .ResolveWith<Resolvers>(x => x.GetItems(default!, default))
+            descriptor.Field(x => x.ItemList)
+                .ResolveWith<Resolvers>(x => x.GetItem(default, default))
                 .UseDbContext<AppDbContext>()
                 .Description("This Item is the list that Item belongs to.");
         }
 
         private class Resolvers
         {
-            public IQueryable<Item> GetItems([Parent] ItemList itemList, [Service] AppDbContext context)
+            public ItemList GetItem([Parent] Item item, [Service] AppDbContext context)
             {
-                return context.Items.Where(x => x.ListId == itemList.Id);
+                return context.ItemLists.Where(x => x.Id == item.ListId).FirstOrDefault();
             }
         }
     }

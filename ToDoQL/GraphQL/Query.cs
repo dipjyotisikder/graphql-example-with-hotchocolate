@@ -8,20 +8,16 @@ namespace ToDoQL.GraphQL
 {
     public class Query
     {
-        [UseDbContext(typeof(AppDbContext))]
-        [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<ItemList> GetItemLists([ScopedService] AppDbContext context)
+        public IQueryable<ItemList> GetItemLists([Service] AppDbContext context)
         {
             return context.ItemLists;
         }
 
-        [UseDbContext(typeof(AppDbContext))]
-        [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Item> GetItems([ScopedService] AppDbContext context)
+        public IQueryable<Item> GetItems([Service] AppDbContext context)
         {
             return context.Items;
         }
