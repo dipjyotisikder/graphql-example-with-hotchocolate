@@ -18,7 +18,7 @@ namespace ToDoQL.GraphQL
         /// <param name="topicEventReceiver">Event receiver.</param>
         /// <returns>Notification object.</returns>
         [SubscribeAndResolve]
-        public async ValueTask<ISourceStream<AddItemResponse>> SubscribeItemCreate([Service] ITopicEventReceiver topicEventReceiver)
+        public async ValueTask<ISourceStream<AddItemResponse>> OnItemCreated([Service] ITopicEventReceiver topicEventReceiver)
         {
             var itemCreationTopic = $"{"ItemCreated"}";
             return await topicEventReceiver.SubscribeAsync<AddItemResponse>(itemCreationTopic);
