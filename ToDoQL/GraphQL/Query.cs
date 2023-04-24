@@ -21,5 +21,17 @@ namespace ToDoQL.GraphQL
         {
             return context.Items;
         }
+
+        [UseFiltering]
+        [UseSorting]
+        public IQueryable<MyItem> GetMyItems([Service] AppDbContext context)
+        {
+            return context.Items.Select(x => new MyItem
+            {
+                Id = x.Id,
+                Description = x.Description,
+                Title = x.Title,
+            });
+        }
     }
 }
