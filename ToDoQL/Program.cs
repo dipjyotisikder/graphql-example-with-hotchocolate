@@ -29,7 +29,8 @@ namespace ToDoQL
                 .AddType<ItemListsType>()
                 .AddType<ItemType>()
                 .AddFiltering()
-                .AddSorting();
+                .AddSorting()
+                .AddInMemorySubscriptions();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
