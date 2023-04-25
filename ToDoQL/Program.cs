@@ -72,7 +72,7 @@ namespace ToDoQL
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-
+                endpoints.MapGraphQLWebSocket();
                 endpoints.MapGraphQL();
             });
 
