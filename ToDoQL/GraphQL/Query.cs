@@ -33,5 +33,16 @@ namespace ToDoQL.GraphQL
                 Title = x.Title,
             });
         }
+
+        [UseFiltering]
+        [UseSorting]
+        public IQueryable<MyItemList> GetMyItemLists([Service] AppDbContext context)
+        {
+            return context.ItemLists.Select(x => new MyItemList
+            {
+                Id = x.Id,
+                Name = x.Name,
+            });
+        }
     }
 }
