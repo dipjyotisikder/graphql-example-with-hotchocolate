@@ -1,4 +1,4 @@
 ﻿namespace ToDoQL.GraphQL
 {
-    public record AddItemInput(string title, string description, bool isDone, int listId);
+    public record AddItemInput(string Title, string Description, bool IsDone, int ListId);
 }

@@ -17,15 +17,13 @@ namespace ToDoQL.GraphQL
         {
             var item = new Item
             {
-                Title = input.title,
-                Description = input.description,
-                IsDone = input.isDone,
-                ListId = input.listId,
+                Title = input.Title,
+                Description = input.Description,
+                IsDone = input.IsDone,
+                ListId = input.ListId,
             };
             context.Items.Add(item);
             await context.SaveChangesAsync();
-
-            var itemCreationTopic = $"{"ItemCreated"}";
 
             var response = new AddItemResponse(
                 item.Id,
@@ -33,7 +31,27 @@ namespace ToDoQL.GraphQL
                 item.Description,
                 item.IsDone);
 
-            await topicEventSender.SendAsync(itemCreationTopic, response);
+            await topicEventSender.SendAsync(GraphQLConstants.ITEM_CREATION_TOPIC, response);
+
+            return response;
+        }
+
+        [UseDbContext(typeof(AppDbContext))]
+        public async Task<AddItemListResponse> AddItemList(
+            AddItemListInput input,
+            [Service] AppDbContext context,
+            [Service] ITopicEventSender topicEventSender)
+        {
+            var itemList = new ItemList
+            {
+                Name = input.Name,
+            };
+            context.ItemLists.Add(itemList);
+            await context.SaveChangesAsync();
+
+            var response = new AddItemListResponse(itemList.Id, itemList.Name);
+
+            await topicEventSender.SendAsync(GraphQLConstants.ITEMLIST_CREATION_TOPIC, response);
 
             return response;
         }

@@ -1,4 +1,4 @@
 ﻿namespace ToDoQL.GraphQL
 {
-    public record AddItemResponse(int id, string title, string description, bool isDone);
+    public record AddItemResponse(int Id, string Title, string Description, bool IsDone);
 }

@@ -11,12 +11,12 @@ namespace ToDoQL.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ItemsController : ControllerBase
+    public class ItemListsController : ControllerBase
     {
         private readonly AppDbContext _context;
         private readonly ITopicEventSender _topicEventSender;
 
-        public ItemsController(
+        public ItemListsController(
             AppDbContext context,
             ITopicEventSender topicEventSender)
         {
@@ -27,42 +27,38 @@ namespace ToDoQL.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _context.Items
+            return Ok(await _context.ItemLists
                 .Select(x => new
                 {
                     x.Id,
-                    x.Title,
-                    x.Description,
-                    x.IsDone,
-                    ItemList = new
+                    x.Name,
+                    Items = x.Items.Select(y => new
                     {
-                        x.ItemList.Id,
-                        x.ItemList.Name,
-                    }
+                        y.Id,
+                        y.Title,
+                        y.Description,
+                        y.IsDone,
+                    })
                 })
                 .ToListAsync());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] AddItemInput input)
+        public async Task<IActionResult> Create([FromBody] AddItemListInput input)
         {
-            var item = new Item
+            var itemList = new ItemList
             {
-                Title = input.Title,
-                Description = input.Description,
-                IsDone = input.IsDone,
-                ListId = input.ListId,
+                Name = input.Name,
             };
-            _context.Items.Add(item);
+            _context.ItemLists.Add(itemList);
             await _context.SaveChangesAsync();
 
-            var response = new AddItemResponse(
-                item.Id,
-                item.Title,
-                item.Description,
-                item.IsDone);
+            var response = new AddItemListResponse(
+                itemList.Id,
+                itemList.Name
+                );
 
-            await _topicEventSender.SendAsync(GraphQLConstants.ITEM_CREATION_TOPIC, response);
+            await _topicEventSender.SendAsync(GraphQLConstants.ITEMLIST_CREATION_TOPIC, response);
 
             return Ok(response);
         }
