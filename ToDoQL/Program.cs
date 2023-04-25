@@ -74,6 +74,7 @@ namespace ToDoQL
             {
                 endpoints.MapControllers();
                 endpoints.MapGraphQL();
+                endpoints.MapGraphQLWebSocket("/subscriptions");
             });
 
             app.UseGraphQLVoyager(new VoyagerOptions
