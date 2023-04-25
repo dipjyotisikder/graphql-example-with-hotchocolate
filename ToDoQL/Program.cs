@@ -59,6 +59,7 @@ namespace ToDoQL
 
             app.UseStaticFiles();
 
+            app.UseWebSockets();
             app.UseRouting();
 
             app.UseCors(builder => builder
@@ -72,7 +73,6 @@ namespace ToDoQL
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapGraphQLWebSocket();
                 endpoints.MapGraphQL();
             });
 
