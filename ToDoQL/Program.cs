@@ -36,6 +36,8 @@ namespace ToDoQL
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors();
+
             WebApplication app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -58,6 +60,12 @@ namespace ToDoQL
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors(builder => builder
+                .SetIsOriginAllowed(_ => true)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
 
             app.UseAuthorization();
 
